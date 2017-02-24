@@ -1,5 +1,5 @@
 package Monopoly.CSC180;
 
-public class piece {
+public class FileReader {
 
 }
