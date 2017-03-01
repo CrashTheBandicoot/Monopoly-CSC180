@@ -17,4 +17,9 @@ public class Player {
 	public void movePiece(int numberToMove){
 		location = piece.move(numberToMove, location);
 	}
+	public void takeTurn(){
+		//roll dice;
+		int numRolled = 0;
+		movePiece(numRolled);
+	}
 }
