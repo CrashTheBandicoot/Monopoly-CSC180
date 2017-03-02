@@ -21,5 +21,7 @@ public class Player {
 		//roll dice;
 		int numRolled = 0;
 		movePiece(numRolled);
+		//get tile
+		//do action associated with that
 	}
 }
