@@ -4,11 +4,11 @@ import javax.swing.JFrame;
 
 public class MenuScreen {
 	public JFrame frame;
-	public MenuScreen(int x, int y){
+	public MenuScreen(int hight, int width){
 		frame = new JFrame("Monopoly");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    frame.setLocationRelativeTo(null);
-		frame.setSize(x, y);
+		frame.setSize(hight, width);
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
 }
