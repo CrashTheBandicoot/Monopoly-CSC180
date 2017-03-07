@@ -117,6 +117,7 @@ public class Board {
 				cards = new Card(lines, "Chance");
 				this.chanceCards.add(cards);
 			}
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
