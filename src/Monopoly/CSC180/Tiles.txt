@@ -128,7 +128,7 @@ MortgageValue=60
 HouseCost=50
 HotelCost=50
 
-TileName=Go to Jail/Just Visiting
+TileName=In Jail/Just Visiting
 TileColor=ffffff
 TilePrice=0
 TileRentBase=0

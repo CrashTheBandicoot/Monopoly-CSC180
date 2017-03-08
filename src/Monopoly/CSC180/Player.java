@@ -1,12 +1,19 @@
 package Monopoly.CSC180;
+import java.util.function.BiFunction;
 
 public class Player {
 	private Piece piece;
 	private int moneyOwned;
 	private int location;
-	public Player(Piece piece, int money){
+	private Board board;
+	public int ownedHouses;
+	public int ownedHotels;
+	public boolean inJail;
+	cardCheck checker = new cardCheck();
+	public Player(Piece piece, int money, Board board){
 		this.piece = piece;
 		this.moneyOwned = money;
+		this.board = board;
 	}
 	public Piece getPiece(){
 		return piece;
@@ -14,8 +21,19 @@ public class Player {
 	public int getMoney(){
 		return moneyOwned;
 	}
+	public <T> void setMoney(T getMoney, T modifier, BiFunction<T, T, T> equation) {
+		T operand1 = getMoney;
+		T operand2 = modifier;
+		T result = equation.apply(operand1, operand2);
+		moneyOwned = (int)result;
+	}
+	//For cards such as "Return to GO". And other specific move cards.
+	public void setLocation(int newLocation) {
+		this.location = newLocation;
+	}
 	public void movePiece(int numberToMove){
 		location = piece.move(numberToMove, location);
+		checker.checkMove(location, this, this.board);
 	}
 	public void takeTurn(){
 		//roll dice;
