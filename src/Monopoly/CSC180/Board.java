@@ -14,9 +14,10 @@ import java.nio.file.Paths;
 
 public class Board {
 	static int numberOfTiles = 40;
+	List<Player> playerArray = new ArrayList<Player>();
 	List<Tile> tileArray = new ArrayList<Tile>();
-	List<Card> communityChestCards = new ArrayList<Card>();
-	List<Card> chanceCards = new ArrayList<Card>();
+	public List<Card> communityChestCards = new ArrayList<Card>();
+	public List<Card> chanceCards = new ArrayList<Card>();
 	Tile tile;
 	String name;
 	String color;
@@ -32,6 +33,7 @@ public class Board {
 	int HotelCost;
 	Card cards;
 	public void CreateBoardGame() {
+		loadTiles();
 		loadCards();
 	}
 	public void movePlayer(Player playerObject) {
@@ -48,7 +50,7 @@ public class Board {
 	}
 	public void loadTiles() {
 		String tilefilePath = "C:\\Users\\Stein Muhlhauser\\git\\Monopoly-CSC180\\src\\Monopoly\\CSC180\\Tiles.txt";
-		String regexArgs = "TileName=([.&a-zA-Z\\s?]+)\\nTileColor=([a-zA-Z0-9\\s?]+)\\nTilePrice=([0-9\\s?]+)\\nTileRentBase=([0-9\\s?]+)\\nTileRent1House=([0-9\\s?]+)\\nTileRent2House=([0-9\\s?]+)\\nTileRent3House=([0-9\\s?]+)\\nTileRent4House=([0-9\\s?]+)\\nTileRentHotel=([0-9\\s?]+)\\nMortgageValue=([0-9\\s?]+)\\nHouseCost=([0-9\\s?]+)\\nHotelCost=([0-9\\s?]+)";
+		String regexArgs = "TileName=([.&/a-zA-Z\\s?]+)\\nTileColor=([a-zA-Z0-9\\s?]+)\\nTilePrice=([0-9\\s?]+)\\nTileRentBase=([0-9\\s?]+)\\nTileRent1House=([0-9\\s?]+)\\nTileRent2House=([0-9\\s?]+)\\nTileRent3House=([0-9\\s?]+)\\nTileRent4House=([0-9\\s?]+)\\nTileRentHotel=([0-9\\s?]+)\\nMortgageValue=([0-9\\s?]+)\\nHouseCost=([0-9\\s?]+)\\nHotelCost=([0-9\\s?]+)";
 		try {
 			List<String> linesList = Files.readAllLines(Paths.get(tilefilePath));
 			String textinfo = linesList
@@ -92,8 +94,10 @@ public class Board {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		int i=0;
 		for(Tile tile : tileArray) {
 			System.out.println(tile.tileName);
+			System.out.println(i++);
 		}
 	}
 	public void loadCards() {
@@ -105,7 +109,6 @@ public class Board {
 					.stream()
 					.map(s -> s.toString())
 					.reduce((t,u) -> t + "\n" + u).get();
-			//System.out.println(cardText);
 			String[] cardSeperation = cardText.split("\\n\\n");
 			String[] communityChest = cardSeperation[0].split("\\n");
 			String[] chanceCards = cardSeperation[1].split("\\n");
@@ -116,12 +119,12 @@ public class Board {
 			for(String lines : chanceCards) {
 				cards = new Card(lines, "Chance");
 				this.chanceCards.add(cards);
+				System.out.println(lines);
 			}
-			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 	}
+	
 }
