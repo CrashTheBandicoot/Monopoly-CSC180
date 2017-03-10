@@ -20,6 +20,7 @@ public class Board {
 	List<Tile> tileArray = new ArrayList<Tile>();
 	public List<Card> communityChestCards = new ArrayList<Card>();
 	public List<Card> chanceCards = new ArrayList<Card>();
+	Die die = new Die();
 	Tile tile;
 	String name;
 	String color;
@@ -39,21 +40,90 @@ public class Board {
 		loadCards();
 	}
 	public void movePlayer(Player playerObject) {
-		
+		playerObject.movePiece(die.roll());
+		checkTileOwner(playerObject, tileArray.get(playerObject.getLocation()));
 	}
-	public void incomeTax() {
-		
+	public void taxPlayer(Player playerObject) {
+		//The below code should be set to a specific number depending on what tax type the player selects
+		int trialOption = (Integer)null;
+		if(playerObject.getLocation() == 4 && tileArray.get(4).tileName.equals("Income Tax")) {
+			if(trialOption == 0) {
+				int percentage = (int)Math.round(playerObject.getMoney()/0.10);
+				playerObject.setMoney(playerObject.getMoney(), percentage, (t,u) -> t-u);
+			}
+			else if(trialOption == 1) {
+				playerObject.setMoney(playerObject.getMoney(), 200, (t,u) -> t-u);
+			}
+		}
+		if(playerObject.getLocation() == 38 && tileArray.get(38).tileName.equals("Luxury Tax")) {
+			playerObject.setMoney(playerObject.getMoney(), 75, (t,u) -> t-u);
+		}
 	}
 	public void buyProperty(Player playerObject, Tile tileToBuy) {
-		
+		if(playerObject.getLocation() == tileArray.indexOf(tileToBuy)) {
+			if(tileToBuy.tileOwner.equals("Board") && playerObject.getMoney() >= tileToBuy.tilePrice) {
+				playerObject.setMoney(playerObject.getMoney(), tileToBuy.tilePrice, (t,u) -> t-u);
+			}
+			else {
+				System.out.println("You cannot buy this tile, it is owned by " + tileToBuy.tileOwner);
+			}
+		}
 	}
 	public void buyImprovement(Player playerObject, Tile tileForHouse) {
-		
+		if(playerObject.getLocation() == tileArray.indexOf(tileForHouse)) {
+			if(tileForHouse.houseCount == 0 && playerObject.getMoney() >= tileForHouse.houseCost && tileForHouse.tileOwner.equals(playerObject.getName())) {
+				playerObject.setMoney(playerObject.getMoney(), tileForHouse.houseCost, (t,u) -> t-u);
+				tileForHouse.houseCount = 1;
+			}
+			else if(tileForHouse.houseCount == 1 && playerObject.getMoney() >= tileForHouse.houseCost && tileForHouse.tileOwner.equals(playerObject.getName())) {
+				playerObject.setMoney(playerObject.getMoney(), tileForHouse.houseCost, (t,u) -> t-u);
+				tileForHouse.houseCount = 2;
+			}
+			else if(tileForHouse.houseCount == 2 && playerObject.getMoney() >= tileForHouse.houseCost && tileForHouse.tileOwner.equals(playerObject.getName())) {
+				playerObject.setMoney(playerObject.getMoney(), tileForHouse.houseCost, (t,u) -> t-u);
+				tileForHouse.houseCount = 3;
+			}
+			else if(tileForHouse.houseCount == 3 && playerObject.getMoney() >= tileForHouse.houseCost && tileForHouse.tileOwner.equals(playerObject.getName())) {
+				playerObject.setMoney(playerObject.getMoney(), tileForHouse.houseCost, (t,u) -> t-u);
+				tileForHouse.houseCount = 4;
+			}
+			else if(tileForHouse.houseCount == 4 && playerObject.getMoney() >= tileForHouse.hotelCost && tileForHouse.tileOwner.equals(playerObject.getName())) {
+				playerObject.setMoney(playerObject.getMoney(), tileForHouse.hotelCost, (t,u) -> t-u);
+				tileForHouse.hotelCount = 1;
+				tileForHouse.houseCount = 0;
+			}
+		}
+	}
+	public void payRent(Player playerObject, Tile tileToPayRent) {
+		if(!tileToPayRent.tileOwner.equals("Board") && !tileToPayRent.tileOwner.equals(playerObject.getName())) {
+			if(tileToPayRent.houseCount == 0) {
+				playerObject.setMoney(playerObject.getMoney(), tileToPayRent.tileRentBase, (t,u) -> t-u);
+			}
+			if(tileToPayRent.houseCount == 1) {
+				playerObject.setMoney(playerObject.getMoney(), tileToPayRent.tileRent1House, (t,u) -> t-u);
+			}
+			if(tileToPayRent.houseCount == 2) {
+				playerObject.setMoney(playerObject.getMoney(), tileToPayRent.tileRent2House, (t,u) -> t-u);
+			}
+			if(tileToPayRent.houseCount == 3) {
+				playerObject.setMoney(playerObject.getMoney(), tileToPayRent.tileRent3House, (t,u) -> t-u);
+			}
+			if(tileToPayRent.houseCount == 4) {
+				playerObject.setMoney(playerObject.getMoney(), tileToPayRent.tileRent4House, (t,u) -> t-u);
+			}
+			if(tileToPayRent.hotelCount == 1) {
+				playerObject.setMoney(playerObject.getMoney(), tileToPayRent.tileRentHotel, (t,u) -> t-u);
+			}
+		}
+			
+	}
+	public void checkTileOwner(Player playerObject, Tile steppedOnTile) {
+		if(playerObject.getLocation() == tileArray.indexOf(steppedOnTile)) {
+			payRent(playerObject, steppedOnTile);
+		}
 	}
 	public void loadTiles() {
-//		URL tileFile = getClass().getResource("Titles.txt");
-//		File file = new File(tileFile.getPath());
-		String tilefilePath = "C:\\Users\\Kimberly Nicole\\Desktop\\SchoolStuff\\OpenSource Platform Dev\\Monopoly\\Monopoly-CSC180\\src\\Monopoly\\CSC180\\Tiles.txt";
+		String tilefilePath = "src/Tiles.txt";
 		String regexArgs = "TileName=([.&/a-zA-Z\\s?]+)\\nTileColor=([a-zA-Z0-9\\s?]+)\\nTilePrice=([0-9\\s?]+)\\nTileRentBase=([0-9\\s?]+)\\nTileRent1House=([0-9\\s?]+)\\nTileRent2House=([0-9\\s?]+)\\nTileRent3House=([0-9\\s?]+)\\nTileRent4House=([0-9\\s?]+)\\nTileRentHotel=([0-9\\s?]+)\\nMortgageValue=([0-9\\s?]+)\\nHouseCost=([0-9\\s?]+)\\nHotelCost=([0-9\\s?]+)";
 		try {
 			List<String> linesList = Files.readAllLines(Paths.get(tilefilePath));
@@ -105,7 +175,11 @@ public class Board {
 		}
 	}
 	public void loadCards() {
-		String cardFilePath = "C:\\Users\\Kimberly Nicole\\Desktop\\SchoolStuff\\OpenSource Platform Dev\\Monopoly\\Monopoly-CSC180\\src\\Monopoly\\CSC180\\Cards.txt";
+		
+//		URL cardFile = getClass().getResource("Cards.txt");
+//		File file = new File(cardFile.getPath());
+//		String cardFilePath = file.getPath();
+		String cardFilePath = "src/Cards.txt";
 		List<String> cardLines;
 		try {
 			cardLines = Files.readAllLines(Paths.get(cardFilePath));

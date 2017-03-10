@@ -6,6 +6,7 @@ public class Player {
 	private int moneyOwned;
 	private int location;
 	private Board board;
+	private String name;
 	public int ownedHouses;
 	public int ownedHotels;
 	public boolean inJail;
@@ -41,5 +42,11 @@ public class Player {
 		movePiece(numRolled);
 		//get tile
 		//do action associated with that
+	}
+	public int getLocation() {
+		return this.location;
+	}
+	public String getName() {
+		return this.name;
 	}
 }
