@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import java.io.BufferedReader;
+import com.sun.javafx.scene.control.skin.TitledPaneSkin;
+
+import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -49,7 +51,9 @@ public class Board {
 		
 	}
 	public void loadTiles() {
-		String tilefilePath = "C:\\Users\\Stein Muhlhauser\\git\\Monopoly-CSC180\\src\\Monopoly\\CSC180\\Tiles.txt";
+//		URL tileFile = getClass().getResource("Titles.txt");
+//		File file = new File(tileFile.getPath());
+		String tilefilePath = "C:\\Users\\Kimberly Nicole\\Desktop\\SchoolStuff\\OpenSource Platform Dev\\Monopoly\\Monopoly-CSC180\\src\\Monopoly\\CSC180\\Tiles.txt";
 		String regexArgs = "TileName=([.&/a-zA-Z\\s?]+)\\nTileColor=([a-zA-Z0-9\\s?]+)\\nTilePrice=([0-9\\s?]+)\\nTileRentBase=([0-9\\s?]+)\\nTileRent1House=([0-9\\s?]+)\\nTileRent2House=([0-9\\s?]+)\\nTileRent3House=([0-9\\s?]+)\\nTileRent4House=([0-9\\s?]+)\\nTileRentHotel=([0-9\\s?]+)\\nMortgageValue=([0-9\\s?]+)\\nHouseCost=([0-9\\s?]+)\\nHotelCost=([0-9\\s?]+)";
 		try {
 			List<String> linesList = Files.readAllLines(Paths.get(tilefilePath));
@@ -101,7 +105,7 @@ public class Board {
 		}
 	}
 	public void loadCards() {
-		String cardFilePath = "C:\\Users\\Stein Muhlhauser\\git\\Monopoly-CSC180\\src\\Monopoly\\CSC180\\Cards.txt";
+		String cardFilePath = "C:\\Users\\Kimberly Nicole\\Desktop\\SchoolStuff\\OpenSource Platform Dev\\Monopoly\\Monopoly-CSC180\\src\\Monopoly\\CSC180\\Cards.txt";
 		List<String> cardLines;
 		try {
 			cardLines = Files.readAllLines(Paths.get(cardFilePath));
