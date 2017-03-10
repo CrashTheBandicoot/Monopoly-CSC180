@@ -40,8 +40,23 @@ public class Board {
 		loadCards();
 	}
 	public void movePlayer(Player playerObject) {
-		playerObject.movePiece(die.roll());
-		checkTileOwner(playerObject, tileArray.get(playerObject.getLocation()));
+		int firstRoll = die.roll();
+		int secondRoll = die.roll();
+		int moveAmount = firstRoll + secondRoll;
+		if(firstRoll == secondRoll) {
+			if(playerObject.snakeEyeAmount == 3) {
+				sendToJail(playerObject);
+			}
+			else {
+				playerObject.snakeEyeAmount++;
+				playerObject.movePiece(moveAmount);
+				checkTileOwner(playerObject, tileArray.get(playerObject.getLocation()));
+			}
+		}
+	}
+	public void sendToJail(Player playerObject) {
+		playerObject.setLocation(10);
+		playerObject.inJail = true;
 	}
 	public void taxPlayer(Player playerObject) {
 		//The below code should be set to a specific number depending on what tax type the player selects

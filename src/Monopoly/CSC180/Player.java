@@ -10,6 +10,7 @@ public class Player {
 	public int ownedHouses;
 	public int ownedHotels;
 	public boolean inJail;
+	public int snakeEyeAmount = 0;
 	cardCheck checker = new cardCheck();
 	public Player(Piece piece, int money, Board board){
 		this.piece = piece;
