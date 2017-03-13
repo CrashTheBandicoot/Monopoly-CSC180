@@ -2,6 +2,8 @@ package Monopoly.CSC180;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -26,39 +28,52 @@ public class MenuScreen {
 		JLabel label = new JLabel();
 		ImageIcon image = new ImageIcon(imagePath);
 		label.setIcon(image);
-		label.setLocation(300, -50);
-		label.setSize(400,300);
+		label.setLocation(300, 0);
+		label.setSize(400, 300);
 		panel.add(label);
-		int[] playerOptions = {2,3,4,5,6,7,8};
+		int[] playerOptions = {2, 3, 4, 5, 6, 7, 8};
 		JComboBox<Integer> playerBox = new JComboBox<Integer>();
 		for(int i = 0; i < playerOptions.length; i++){
 			playerBox.addItem(playerOptions[i]);
 		}
-		playerBox.setFont(new Font("Cochin",1,24));
+		playerBox.setFont(new Font("Cochin", 1, 24));
 		playerBox.setSize(75, 50);
-		playerBox.setLocation(300,500);
+		playerBox.setLocation(300, 450);
 		panel.add(playerBox);
 		JTextArea playerLabel = new JTextArea();
-		playerLabel.setFont(new Font("Cochin",1,24));
-		playerLabel.setSize(220,75);
-		playerLabel.setLocation(225,450);
+		playerLabel.setFont(new Font("Cochin", 1, 24));
+		playerLabel.setSize(220, 75);
+		playerLabel.setLocation(225, 400);
 		playerLabel.setEditable(false);
 		playerLabel.setText("Number of Players");
 		playerLabel.setBackground(color);
 		panel.add(playerLabel);
 		JButton startButton = new JButton("Start Game");
-		startButton.setFont(new Font("Cochin",1,24));
-		startButton.setLocation(600, 475);
+		startButton.setFont(new Font("Cochin", 1, 24));
+		startButton.setLocation(600, 425);
 		startButton.setBackground(Color.WHITE);
-		startButton.setSize(200,75);
+		startButton.setSize(200, 75);
 		panel.add(startButton);
 		panel.setBackground(color);
 		frame.getContentPane().add(panel);
-	}
-	public void ShowWindow(){
+		startButton.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				HideWindow();
+				buildGameWindow();
+				ShowWindow();
+			}	
+		});
+		//has to be last for anything to be seen
 		frame.setVisible(true);
 	}
-	public void hideWindow(){
-		frame.setVisible(false);
+	public void ShowWindow(){
+		frame.getContentPane().setVisible(true);
+	}
+	public void HideWindow(){
+		frame.getContentPane().setVisible(false);
+	}
+	private void buildGameWindow() {
+		frame.getContentPane().removeAll();
 	}
 }

@@ -14,6 +14,7 @@ public class GameManager {
 		String imagePath = "C:\\Users\\Kimberly Nicole\\Desktop\\SchoolStuff\\OpenSource Platform Dev\\Monopoly\\Monopoly-CSC180\\src\\images\\MonopolyLogo.png";
 		menuWindow.buildMainMenuWindow(Color.GRAY, imagePath);
 		menuWindow.ShowWindow();
+		
 		//Stuff for starting game
 //		Board board = new Board();
 //		board.CreateBoardGame();
