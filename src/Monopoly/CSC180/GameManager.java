@@ -9,7 +9,7 @@ public class GameManager {
 	}
 	private static void MainMenu() {
 		String windowName = "Monopoly";
-		MenuScreen menuWindow = new MenuScreen(1000, 1500, windowName);
+		MenuScreen menuWindow = new MenuScreen(800, 1500, windowName);
 		//background color,etc.
 		menuWindow.buildMainMenuWindow(Color.GRAY);
 		menuWindow.ShowWindow();
