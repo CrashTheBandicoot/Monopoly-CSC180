@@ -24,8 +24,9 @@ public class MenuScreen {
 		panel.setSize(width, height);
 		panel.setLayout(null);
 	}
-	public void buildMainMenuWindow(Color color, String imagePath){
+	public void buildMainMenuWindow(Color color){
 		JLabel label = new JLabel();
+		String imagePath = "C:\\Users\\Kimberly Nicole\\Desktop\\SchoolStuff\\OpenSource Platform Dev\\Monopoly\\Monopoly-CSC180\\src\\images\\MonopolyLogo.png";
 		ImageIcon image = new ImageIcon(imagePath);
 		label.setIcon(image);
 		label.setLocation(300, 0);
@@ -75,6 +76,7 @@ public class MenuScreen {
 	}
 	private void buildGameWindow() {
 		panel.removeAll();
+		ImageIcon image = new ImageIcon("C:\\Users\\Kimberly Nicole\\Desktop\\SchoolStuff\\OpenSource Platform Dev\\Monopoly\\Monopoly-CSC180\\src\\images\\MonopolyBoard.png");
 		
 	}
 }

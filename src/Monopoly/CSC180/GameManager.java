@@ -9,10 +9,9 @@ public class GameManager {
 	}
 	private static void MainMenu() {
 		String windowName = "Monopoly";
-		MenuScreen menuWindow = new MenuScreen(800, 1000, windowName);
-		//background color, relative path for images,etc.
-		String imagePath = "C:\\Users\\Kimberly Nicole\\Desktop\\SchoolStuff\\OpenSource Platform Dev\\Monopoly\\Monopoly-CSC180\\src\\images\\MonopolyLogo.png";
-		menuWindow.buildMainMenuWindow(Color.GRAY, imagePath);
+		MenuScreen menuWindow = new MenuScreen(1000, 1500, windowName);
+		//background color,etc.
+		menuWindow.buildMainMenuWindow(Color.GRAY);
 		menuWindow.ShowWindow();
 		
 		//Stuff for starting game
