@@ -50,4 +50,11 @@ public class Player {
 	public String getName() {
 		return this.name;
 	}
+	public String serialize() {
+		String rawLine = String.format("%255s", this.name);
+		return rawLine;
+	}
+	public void deserialize(String raw) {
+		this.name = raw.substring(0, 255).trim();
+	}
 }

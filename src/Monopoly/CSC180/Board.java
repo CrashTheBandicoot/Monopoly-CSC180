@@ -10,6 +10,7 @@ import com.sun.javafx.scene.control.skin.TitledPaneSkin;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -35,6 +36,7 @@ public class Board {
 	int HouseCost;
 	int HotelCost;
 	Card cards;
+	private RandomAccessFile file;
 	public void CreateBoardGame() {
 		loadTiles();
 		loadCards();
@@ -190,10 +192,6 @@ public class Board {
 		}
 	}
 	public void loadCards() {
-		
-//		URL cardFile = getClass().getResource("Cards.txt");
-//		File file = new File(cardFile.getPath());
-//		String cardFilePath = file.getPath();
 		String cardFilePath = "src/Cards.txt";
 		List<String> cardLines;
 		try {
@@ -216,8 +214,30 @@ public class Board {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		
+		}	
 	}
+	public void savePlayerNames() throws IOException {
+		for(Player player : playerArray) {
+			int index = generateIndex(player);
+			file.seek(index);
+			file.write(player.serialize().getBytes());
+		}
+	}
+	public Player loadPlayerNames(Player player) throws IOException {
+		int index = this.generateIndex(player);
+		file.seek(index);
+		byte[] buffer = new byte[255];
+		file.read(buffer);
+		String playerString = new String(buffer);
+		Player p = new Player(null, index, this);
+		p.deserialize(playerString);
+		System.out.println("Load: " + index);
+		return p;
+	}
+	public int generateIndex(Player player) {
+		int index = Math.abs(player.hashCode());
+		return index;
+	}
+	
 	
 }
