@@ -74,6 +74,7 @@ public class MenuScreen {
 		frame.getContentPane().setVisible(false);
 	}
 	private void buildGameWindow() {
-		frame.getContentPane().removeAll();
+		panel.removeAll();
+		
 	}
 }
